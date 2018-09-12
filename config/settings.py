@@ -25,7 +25,8 @@ SECRET_KEY = '0uk(7qu)qz7bl_ki!ugboz2%n==y2i)0%12cl=@c4a1y0w@t2r'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["192.168.1.140", "127.0.0.1",  '195.34.196.161']
+# ALLOWED_HOSTS = ["192.168.1.140", "127.0.0.1",  '195.34.196.161']
+ALLOWED_HOSTS = ['*']
 INTERNAL_IPS = ['127.0.0.1']
 
 # Application definition
@@ -38,7 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
-    'api',
+    # 'api',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'rest_framework_swagger',
+    'corsheaders',
+    'app.company',
+    'app.job',
+    'app.deals'
 ]
 
 MIDDLEWARE = [
@@ -50,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'corsheaders.middleware.CorsMiddleware'
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -79,8 +88,13 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME':'ocrdb',
+        'USER':'postgres',
+        'PASSWORD':'',
+        'HOST':'localhost',
+        'PORT':'',
+       
     }
 }
 
@@ -103,6 +117,19 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+REST_FRAMEWORK = {
+    # 'DEFAULT_PERMISSION_CLASSES': (
+    # 'rest_framework.permissions.IsAuthenticated',
+    # ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+    'rest_framework.authentication.TokenAuthentication',
+    ),
+   
+
+    
+}
+
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
@@ -124,3 +151,12 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 UPLOAD_FOLDER = BASE_DIR + '/uploads/'
+
+# STATICFILES_DIRS=[
+# os.path.join(BASE_DIR,'static')
+
+#     ]
+# STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR),"static_cdn")
+
+# MEDIA_URL = ''
+# MEDIA_ROOT = os.path.join(BASE_DIR,'/home/dell/ocr/ocr-application/app/static')

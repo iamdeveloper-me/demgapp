@@ -17,10 +17,17 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls import include, url
+from rest_framework_swagger.views import get_swagger_view
+schema_view = get_swagger_view(title='OCR API')
+
 
 urlpatterns = [
+    url(r'^$', schema_view),
     path('admin/', admin.site.urls),
-    path('api/', include('api.urls'))
+    # path('api/', include('api.urls'))
+    path('api/', include('app.company.urls')),
+    path('api/', include('app.job.urls')),
+    path('api/', include('app.deals.urls'))
 ]
 
 if settings.DEBUG:

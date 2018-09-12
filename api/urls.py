@@ -1,6 +1,6 @@
-from django.urls import path
-from .views import upload
+# from django.urls import path
+# from .views import upload
 
-urlpatterns = [
-    path('upload_file/', upload)
-]
+# urlpatterns = [
+    # path('upload_file/', upload)
+# ]
