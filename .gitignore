@@ -111,3 +111,10 @@ config/secrets.json
 
 uploads/
 uploads.backup/
+
+
+app/__init__.pyc
+app/deals/migrations/*
+app/job/migrations/*
+app/company/migrations/*
+*.pyc
