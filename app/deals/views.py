@@ -20,9 +20,8 @@ class DealApi(APIView):
 			print(err)
 			return ApiResponse().error("Error while assign the deal",500)
 
-	def get(self,request):
+	def get(self,request,deal_id=None):
 		try:
-			deal_id = request.data.get('id')
 			if(deal_id):
 				try:
 					get_data = DealSerializer(Deals.objects.get(is_deleted=False,id=deal_id))
@@ -50,12 +49,28 @@ class DealApi(APIView):
 		except:
 			return ApiResponse().error("Error", 500)
 
-	def delete(self,request):
+	def delete(self,request,deal_id):
 		try:
-			deal_id = request.data.get('id')
 			Deals.objects.filter(pk=deal_id).update(is_deleted=True)
 			return ApiResponse().success("Successfully Deleted", 200)
 		except Exception as err:
 			print(err)
 			return ApiResponse().error("Please send valid id", 500)
 		
+
+class DealByJobId(APIView):
+	
+	def get(self,request,job_id=None):
+		try:
+			if(job_id):
+				try:
+					deal_data = Deals.objects.filter(is_deleted=False, custom_id=job_id)
+					get_data = DealSerializer(deal_data, many=True)
+				except Exception as err:
+					print(err)
+					return ApiResponse().error("Error while getting the details", 400)
+				return ApiResponse().success(get_data.data, 200)
+			return ApiResponse().error("Please provide job id", 400)
+		except Exception as err: 
+			print(err) 
+			return ApiResponse().error("Deal matching query does not exist", 500)

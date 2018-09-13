@@ -20,9 +20,8 @@ class CompanyApi(APIView):
 			print(err)
 			return ApiResponse().error("Error while assign the company",500)
 
-	def get(self,request):
+	def get(self,request,company_id=None):
 		try:
-			company_id = request.data.get('id')
 			if(company_id):
 				try:
 					get_data = CompanySerializer(Company.objects.get(is_deleted=False,id=company_id))
@@ -50,9 +49,8 @@ class CompanyApi(APIView):
 		except:
 			return ApiResponse().error("Error", 500)
 
-	def delete(self,request):
+	def delete(self,request,company_id):
 		try:
-			company_id = request.data.get('id')
 			Company.objects.filter(pk=company_id).update(is_deleted=True)
 			return ApiResponse().success("Successfully Deleted", 200)
 		except Exception as err:

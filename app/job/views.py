@@ -20,9 +20,9 @@ class JobApi(APIView):
 			print(err)
 			return ApiResponse().error("Error while assign the job",500)
 
-	def get(self,request):
+	def get(self,request,job_id=None):
 		try:
-			job_id = request.data.get('id')
+			
 			if(job_id):
 				try:
 					get_data = JobSerializer(Job.objects.get(is_deleted=False,id=job_id))
@@ -51,9 +51,8 @@ class JobApi(APIView):
 		except:
 			return ApiResponse().error("Error", 500)
 
-	def delete(self,request):
+	def delete(self,request,job_id):
 		try:
-			job_id = request.data.get('id')
 			Job.objects.filter(pk=job_id).update(is_deleted=True)
 			return ApiResponse().success("Successfully Deleted", 200)
 		except Exception as err:
