@@ -5,7 +5,7 @@ from rest_framework import status
 from app.company.serializers import CompanySerializer
 from app.company.models import Company
 from app.lib.response import ApiResponse
-
+from scripts.AgileCRM import agileCRM
 
 class CompanyApi(APIView):
 	
@@ -15,6 +15,7 @@ class CompanyApi(APIView):
 			if not(company_data.is_valid()):
 				return ApiResponse().error(company_data.errors,400)
 			company_data.save()
+			# agileCRM("contacts","POST",company_data,"application/json")
 			return ApiResponse().success("company created successfully",200)
 		except Exception as err:
 			print(err)
@@ -24,14 +25,16 @@ class CompanyApi(APIView):
 		try:
 			if(company_id):
 				try:
-					get_data = CompanySerializer(Company.objects.get(is_deleted=False,id=company_id))
+					company_data = agileCRM("contacts/"+company_id,"GET",None,"application/json")
 				except Exception as err:
 					print(err)	
 					return ApiResponse().error("please provide valid company id", 400)
+				# data = agileCRM("contacts/4767592208138240","GET",None,"application/json")
 			else:
-				company_data = Company.objects.filter(is_deleted=False)
-				get_data = CompanySerializer(company_data, many=True)
-			return ApiResponse().success(get_data.data, 200)
+				# company_data = Company.objects.filter(is_deleted=False)
+				# get_data = CompanySerializer(company_data, many=True)
+				company_data = agileCRM("contacts","GET",None,"application/json")
+			return ApiResponse().success(company_data, 200)
 		except Exception as err: 
 			print(err) 
 			return ApiResponse().error("Company does not exists", 500)

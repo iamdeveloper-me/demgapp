@@ -5,7 +5,7 @@ from rest_framework import status
 from app.deals.serializers import DealSerializer
 from app.deals.models import Deals
 from app.lib.response import ApiResponse
-
+from scripts.AgileCRM import agileCRM
 
 class DealApi(APIView):
 	
@@ -24,14 +24,13 @@ class DealApi(APIView):
 		try:
 			if(deal_id):
 				try:
-					get_data = DealSerializer(Deals.objects.get(is_deleted=False,id=deal_id))
+					deal_data = agileCRM("opportunity/"+deal_id,"GET",None,"application/json")
 				except Exception as err:
 					print(err)	
 					return ApiResponse().error("please provide valid deal id", 400)
 			else:
-				deal_data = Deals.objects.filter(is_deleted=False)
-				get_data = DealSerializer(deal_data, many=True)
-			return ApiResponse().success(get_data.data, 200)
+				deal_data = agileCRM("opportunity/","GET",None,"application/json")
+			return ApiResponse().success(deal_data, 200)
 		except Exception as err: 
 			print(err) 
 			return ApiResponse().error("Deal data does not exists", 500)
