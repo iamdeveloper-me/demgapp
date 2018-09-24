@@ -6,7 +6,7 @@ class JobSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = Job
-		fields = ('id','job_name','job_location','owner_name','owner_location','architect','engineer_name','contractor_customer','is_deleted','created_at','updated_at')
+		fields = ('id','job_name','job_location','post_local_id','owner_name','owner_location','architect','engineer_name','contractor_customer','is_deleted','created_at','updated_at')
 		# extra_kwargs = {
 		# 	'name': {
 		# 		'required':True,

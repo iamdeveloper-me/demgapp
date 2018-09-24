@@ -11,6 +11,7 @@ class Job(models.Model):
 	engineer_name       =  models.CharField(max_length=255)
 	contractor_customer =  models.CharField(max_length=500)
 	file_upload         =  models.FileField(upload_to='Jobdocuments/')
+	post_local_id       =  models.CharField(max_length=900,default='')
 	is_deleted = models.BooleanField(default=False)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)

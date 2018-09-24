@@ -15,7 +15,7 @@ class JobApi(APIView):
 			if not(job_data.is_valid()):
 				return ApiResponse().error(job_data.errors,400)
 			job_data.save()
-			return ApiResponse().success('Job created successfully',200)
+			return ApiResponse().success(job_data.data,200)
 		except Exception as err:
 			print(err)
 			return ApiResponse().error('Error while assign the job',500)
