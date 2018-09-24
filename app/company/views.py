@@ -9,14 +9,20 @@ from scripts.AgileCRM import agileCRM
 import json
 
 class CompanyApi(APIView):
-	
-	def post(self,request):
-		
-		company_data = request.data.get('company_data')
-		data = agileCRM("contacts","POST",company_data,"application/json")
-		return ApiResponse().success(data ,200)
-		
 
+	def post(self,request):
+		try:
+			company_data = CompanySerializer(data=request.data)
+			if not(company_data.is_valid()):
+				return ApiResponse().error(company_data.errors,400)
+			company_data.save()
+			return ApiResponse().success("company created successfully",200)
+		except Exception as err:
+			print(err)
+			return ApiResponse().error("Error while assign the company",500)
+
+	
+	
 	def get(self,request):
 		
 			# if(company_id):
@@ -28,7 +34,7 @@ class CompanyApi(APIView):
 			# else:
 		# company_list = agileCRM("contacts/companies?page_size=500&global_sort_key=-created_time","GET",None,"application/json")
 		# return ApiResponse().success(company_list, 200)
-		response = {}
+		# response = {}
 		eng_data = Company.objects.filter(is_deleted=False, tags='Engineer')#.values_list('company_name', 'company_id')
 		# response['eng_data'] = eng_data
 		arc_data = Company.objects.filter(is_deleted=False, tags='Architect')#.values_list('company_name', 'company_id')
@@ -74,6 +80,14 @@ class CompanyApi(APIView):
 
 
 class AllCompanyApi(APIView):
+
+	def post(self,request):
+
+		company_data = request.data.get('company_data')
+		data = agileCRM("contacts","POST",company_data,"application/json")
+		return ApiResponse().success(data ,200)
+		
+
 
 	def get(self,request):
 		company_list = agileCRM("contacts/companies?page_size=500&global_sort_key=-created_time","GET",None,"application/json")
