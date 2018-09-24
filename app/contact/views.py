@@ -18,8 +18,8 @@ class ContactApi(APIView):
 		if(contact_id):
 			contact_data = agileCRM("contacts/"+contact_id,"GET",None,"application/json")
 		else:
-			contact_data = agileCRM("contacts?page_size=20&global_sort_key=-created_time","GET",None,"application/json")
-			print(contact_data)
+			# contact_data = agileCRM("contacts?page_size=700&global_sort_key=-created_time","GET",None,"application/json")
+			contact_data = agileCRM("search?q=austin_b raut&page_size=900&type='PERSON'", "GET", None,"application/json")
 		return ApiResponse().success(contact_data, 200)
 		
 

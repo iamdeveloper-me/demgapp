@@ -22,13 +22,17 @@ schema_view = get_swagger_view(title='OCR API')
 
 
 urlpatterns = [
+    
     url(r'^$', schema_view),
     path('admin/', admin.site.urls),
     # path('api/', include('api.urls'))
+    path('api/', include('app.owner.urls')),
+    path('api/', include('app.properties.urls')),
     path('api/', include('app.company.urls')),
     path('api/', include('app.job.urls')),
     path('api/', include('app.deals.urls')),
-    path('api/', include('app.contact.urls'))
+    path('api/', include('app.contact.urls')),
+    
 ]
 
 if settings.DEBUG:

@@ -46,7 +46,9 @@ INSTALLED_APPS = [
     'corsheaders',
     'app.company',
     'app.job',
-    'app.deals'
+    'app.deals',
+    'app.properties',
+    'app.owner'
 ]
 
 MIDDLEWARE = [
@@ -91,7 +93,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME':'ocrdb',
         'USER':'postgres',
-        'PASSWORD':'',
+        'PASSWORD':'1234',
         'HOST':'localhost',
         'PORT':'',
        

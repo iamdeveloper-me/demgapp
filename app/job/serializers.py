@@ -11,14 +11,14 @@ class JobSerializer(serializers.ModelSerializer):
 		# 	'name': {
 		# 		'required':True,
 		# 		'error_messages':{
-		# 		'required':"Please fill this field",
+		# 		'required':'Please fill this field',
 		# 		}
 		# 	},
 			
 		# 	'company': {
 		# 		'required':True,
 		# 		'error_messages':{
-		# 		'required':"Please provide company id",
+		# 		'required':'Please provide company id',
 		# 		}
 		# 	},
 		# }		

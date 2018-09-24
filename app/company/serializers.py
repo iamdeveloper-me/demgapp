@@ -6,5 +6,5 @@ class CompanySerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = Company
-		fields = ('id','name','tag','is_deleted','created_at','updated_at')
+		fields = ('id','company_id','tags','company_name','is_deleted','created_at','updated_at')
 		
