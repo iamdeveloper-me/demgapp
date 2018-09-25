@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'app.job',
     'app.deals',
     'app.properties',
-    'app.owner'
+    'app.owner',
+    'app.contact'
 ]
 
 MIDDLEWARE = [

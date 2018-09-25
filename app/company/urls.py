@@ -4,7 +4,7 @@ app_name='company'
 
 
 urlpatterns = [
-	url(r'^company/list/$',views.AllCompanyApi.as_view()),
+	url(r'^company/list/$',views.CrmCompanyApi.as_view()),
 	url(r'^company/$',views.CompanyApi.as_view()),
 
 ]

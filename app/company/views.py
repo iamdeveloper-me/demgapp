@@ -79,7 +79,7 @@ class CompanyApi(APIView):
 	# 	
 
 
-class AllCompanyApi(APIView):
+class CrmCompanyApi(APIView):
 
 	def post(self,request):
 
@@ -93,7 +93,6 @@ class AllCompanyApi(APIView):
 		company_list = agileCRM("contacts/companies?page_size=500&global_sort_key=-created_time","GET",None,"application/json")
 		company_data = json.loads(company_list)
 		for data in company_data:
-			print(data['properties'])
 			try:
 				comp_id = data['id']
 				if Company.objects.filter(company_id=comp_id).exists():
