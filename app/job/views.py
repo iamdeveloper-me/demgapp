@@ -9,44 +9,52 @@ from scripts.AgileCRM import agileCRM
 from app.company.models import Company
 from app.company.serializers import CompanySerializer
 import json
+import requests
 
 class JobApi(APIView):
 	
 	def post(self,request):
 		try:
+		
 			job_data = JobSerializer(data=request.data)
 			if not(job_data.is_valid()):
 				return ApiResponse().error(job_data.errors,400)
 			job_data.save()
 			return ApiResponse().success(job_data.data,200)
+			
 		except Exception as err:
 			print(err)
 			return ApiResponse().error('Error while assign the job',500)
 
 	def get(self,request,job_id=None):
-		company_list = agileCRM("contacts/companies?page_size=500&global_sort_key=-created_time","GET",None,"application/json")
-		company_data = json.loads(company_list)
-		for data in company_data:
-			print("data")
-			comp_id = data['id']
-			if Company.objects.filter(company_id=comp_id).exists():
-				print("Company is already present for id: ", comp_id)
-			else:
-				if data['tags'] == []:
-					Company.objects.create(company_id=comp_id, company_name=data['properties'][0]['value'])
-				else:
-					Company.objects.create(company_id=comp_id, tags=data['tags'][0], company_name=data['properties'][0]['value'])
+		# company_list = agileCRM("contacts/companies?page_size=500&global_sort_key=-created_time","GET",None,"application/json")
+		# company_data = json.loads(company_list)
+		# for data in company_data:
+		# 	comp_id = data['id']
+		# 	if Company.objects.filter(company_id=comp_id).exists():
+		# 		print("Company is already present for id: ", comp_id)
+		# 	else:
+		# 		if data['tags'] == []:
+		# 			Company.objects.create(company_id=comp_id, company_name=data['properties'][0]['value'])
+		# 		else:
+		# 			Company.objects.create(company_id=comp_id, tags=data['tags'][0], company_name=data['properties'][0]['value'])
 
 		try:
 			if(job_id):
+				print(job_id)
 				try:
-					get_data = JobSerializer(Job.objects.get(is_deleted=False,id=job_id))
+					data=Job.objects.get(is_deleted=False,id=job_id)
+					print(data)
+					print("******************************")
+					get_data = JobSerializer(data)
 				except Exception as err:
 					print(err)	
 					return ApiResponse().error('please provide valid job id', 400)
 			else:
 				job_data = Job.objects.filter(is_deleted=False)
 				get_data = JobSerializer(job_data, many=True)
+			# aa=get_data.data
+			
 			return ApiResponse().success(get_data.data, 200)
 		except Exception as err: 
 			print(err) 
