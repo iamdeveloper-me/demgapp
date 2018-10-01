@@ -15,13 +15,17 @@ class JobApi(APIView):
 	
 	def post(self,request):
 		try:
-		
-			job_data = JobSerializer(data=request.data)
-			if not(job_data.is_valid()):
-				return ApiResponse().error(job_data.errors,400)
-			job_data.save()
-			return ApiResponse().success(job_data.data,200)
 			
+			company_name = request.data.get('owner_name')
+			is_exists = Company.objects.filter(company_name=company_name).exists()
+			if is_exists:
+				job_data = JobSerializer(data=request.data)
+				if not(job_data.is_valid()):
+					return ApiResponse().error(job_data.errors,400)
+				job_data.save()
+				return ApiResponse().success(job_data.data,200)
+			else:
+				return ApiResponse().error('Owner name does not exists',400)
 		except Exception as err:
 			print(err)
 			return ApiResponse().error('Error while assign the job',500)
@@ -44,8 +48,6 @@ class JobApi(APIView):
 				print(job_id)
 				try:
 					data=Job.objects.get(is_deleted=False,id=job_id)
-					print(data)
-					print("******************************")
 					get_data = JobSerializer(data)
 				except Exception as err:
 					print(err)	
@@ -54,7 +56,6 @@ class JobApi(APIView):
 				job_data = Job.objects.filter(is_deleted=False)
 				get_data = JobSerializer(job_data, many=True)
 			# aa=get_data.data
-			
 			return ApiResponse().success(get_data.data, 200)
 		except Exception as err: 
 			print(err) 
@@ -63,14 +64,19 @@ class JobApi(APIView):
 	def put(self,request,job_id):
 		try:
 			# job_id = request.data.get('id')
-			get_data = Job.objects.get(pk=job_id)
-			update_data = JobSerializer(get_data,data=request.data)
-			# print(update_data)
-			if update_data.is_valid():
-				update_data.save()
-				return ApiResponse().success('Job details updated Successfully', 200)
+			company_name = request.data.get('owner_name')
+			is_exists = Company.objects.filter(company_name=company_name).exists()
+			if is_exists:
+				get_data = Job.objects.get(pk=job_id)
+				update_data = JobSerializer(get_data,data=request.data)
+				# print(update_data)
+				if update_data.is_valid():
+					update_data.save()
+					return ApiResponse().success('Job details updated Successfully', 200)
+				else:
+					return ApiResponse().error('Error while updating the job details', 400)
 			else:
-				return ApiResponse().error('Error while updating the job details', 400)	
+				return ApiResponse().error('Owner name does not exists',400)	
 		except:
 			return ApiResponse().error('Error', 500)
 

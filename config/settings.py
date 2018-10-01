@@ -89,17 +89,30 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME':'ocrdb',
+#         'USER':'postgres',
+#         'PASSWORD':'1234',
+#         'HOST':'localhost',
+#         'PORT':'',
+       
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME':'ocrdb',
-        'USER':'postgres',
-        'PASSWORD':'1234',
-        'HOST':'localhost',
+        'NAME':'gcucpwux',
+        'USER':'gcucpwux',
+        'PASSWORD':'LcTB4qIVe9TkKDXjL90XtY3UIE34Hfbx',
+        'HOST':'stampy.db.elephantsql.com',
         'PORT':'',
        
     }
 }
+
 
 
 # Password validation

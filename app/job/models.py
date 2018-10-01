@@ -1,8 +1,9 @@
 from django.db import models
 from datetime import datetime
-
+from app.company.models import Company
 
 class Job(models.Model):
+	
 	job_name            =  models.CharField(max_length=255)
 	job_location        =  models.CharField(max_length=500)
 	owner_name          =  models.CharField(max_length=255) 

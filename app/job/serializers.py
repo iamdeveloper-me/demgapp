@@ -17,19 +17,19 @@ class JobSerializer(serializers.ModelSerializer):
 			'architect': {
 				'required':True,
 				'error_messages':{
-				'required':'This field is required',
+				'required':'Architect field is required',
 				}
 			},
 			'engineer_name': {
 				'required':True,
 				'error_messages':{
-				'required':'This field  is required',
+				'required':'Engineer name  is required',
 				}
 			},
 			'contractor_customer': {
 				'required':True,
 				'error_messages':{
-				'required':'This field is required',
+				'required':'contractor_customer field is required',
 				}
 			},
 			'job_location': {

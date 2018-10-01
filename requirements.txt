@@ -31,3 +31,5 @@ django_rest_swagger==2.2.0
 djangorestframework==3.8.2
 gunicorn==19.6.0
 django-cors-headers
+markdown 
+django-filter
