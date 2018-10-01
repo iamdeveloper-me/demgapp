@@ -74,7 +74,7 @@ class JobApi(APIView):
 					update_data.save()
 					return ApiResponse().success('Job details updated Successfully', 200)
 				else:
-					return ApiResponse().error('Error while updating the job details', 400)
+					return ApiResponse().error(update_data.errors,400)
 			else:
 				return ApiResponse().error('Owner name does not exists',400)	
 		except:
@@ -87,8 +87,6 @@ class JobApi(APIView):
 		except Exception as err:
 			print(err)
 			return ApiResponse().error('Please send valid id', 500)
-
-
 
 
 class CrmJobApi(APIView):
