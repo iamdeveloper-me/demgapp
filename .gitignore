@@ -116,4 +116,7 @@ app/__init__.pyc
 app/deals/migrations/*
 app/job/migrations/*
 app/company/migrations/*
+app/contact/migrations/*
+app/owner/migrations/*
+app/properties/migrations/*
 *.pyc
