@@ -8,7 +8,7 @@ class Job(models.Model):
 	job_location        =  models.CharField(max_length=500)
 	owner_name          =  models.CharField(max_length=255) 
 	owner_location      =  models.CharField(max_length=500)
-	architect           =  models.TextField(null=True,blank=True)
+	architect           =  models.CharField(max_length=255)
 	engineer_name       =  models.CharField(max_length=255)
 	contractor_customer =  models.CharField(max_length=500)
 	file_upload         =  models.FileField(upload_to='Jobdocuments/')

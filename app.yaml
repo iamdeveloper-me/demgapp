@@ -1,0 +1,220 @@
+# [START django_app]
+runtime: python37
+api_version: 1
+threadsafe: yes
+
+handlers:
+- url: /static
+  static_dir: static/
+- url: .*
+  script: config.wsgi.application
+
+# Only pure Python libraries can be vendored
+# Python libraries that use C extensions can
+# only be included if they are part of the App Engine SDK 
+# Using Third Party Libraries: https://cloud.google.com/appengine/docs/python/tools/using-libraries-python-27
+libraries:
+- name: alabaster
+  version: 0.7.11
+- name: Babel
+  version: 2.6.0
+- name: beautifulsoup4
+  version: 4.6.1
+- name: bs4
+  version: 0.0.1
+- name: certifi
+  version: 2018.4.16
+- name: chardet
+  version: 3.0.4
+- name: Django
+  version: 2.0.7
+- name: django-debug-toolbar
+  version: 1.9.1
+- name: docutils
+  version: 0.14
+- name: idna
+  version: 2.7
+- name: imagesize
+  version: 1.0.0
+- name: Jinja2
+  version: 2.10
+- name: lxml
+  version: 4.2.3
+- name: MarkupSafe
+  version: 1.0
+- name: numpy
+  version: 1.14.5
+- name: opencv-python
+  version: 3.4.2.16
+- name: packaging
+  version: 17.1
+- name: psycopg2
+  version: 2.7.5
+- name: Pygments
+  version: 2.2.0
+- name: pyparsing
+  version: 2.2.0
+- name: pytz
+  version: 2018.5
+- name: requests
+  version: 2.19.1
+- name: six
+  version: 1.11.0
+- name: snowballstemmer
+  version: 1.2.1
+- name: Sphinx
+  version: 1.7.6
+- name: sphinxcontrib-websupport
+  version: 1.1.0
+- name: sqlparse
+  version: 0.2.4
+- name: urllib3
+  version: 1.23
+- name: Werkzeug
+  version: 0.14.1
+- name: django_rest_swagger
+  version: 2.2.0
+- name: djangorestframework
+  version: 3.8.2
+- name: gunicorn
+  version: 19.6.0
+- name: django-cors-headers
+  version: "latest"
+- name: markdown 
+  version: "latest"
+- name: django-filter
+  version: "latest"
+
+
+# [END django_app]
+
+# Google App Engine limits application deployments to 10,000 uploaded files per
+# version. The skip_files section allows us to skip virtual environment files
+# to meet this requirement. The first 5 are the default regular expressions to
+# skip, while the last one is for all env/ files.
+skip_files:
+- ^(.*/)?#.*#$
+- ^(.*/)?.*~$
+- ^(.*/)?.*\.py[co]$
+- ^(.*/)?.*/RCS/.*$
+- ^(.*/)?\..*$
+- ^env/.*$
+- ^__pycache__/$
+- ^*$py.class$
+
+# C extensions
+- ^*.so$
+
+- ^.idea/$
+
+# Distribution / packaging
+- ^.Python$
+- ^build/$
+- ^develop-eggs/$
+- ^dist/$
+- ^downloads/$
+- ^eggs/$
+- ^.eggs/$
+- ^lib64/$
+- ^parts/$
+- ^sdist/$
+- ^var/$
+- ^wheels/$
+- ^*.egg-info/$
+- ^.installed.cfg$
+- ^*.egg$
+- ^MANIFEST$
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+- ^*.manifest$
+- ^*.spec$
+
+# Installer logs
+- ^pip-log.txt$
+- ^pip-delete-this-directory.txt$
+
+# Unit test / coverage reports
+- ^htmlcov/$
+- ^.tox/$
+- ^.coverage$
+- ^.coverage.*$
+- ^.cache$
+- ^nosetests.xml$
+- ^coverage.xml$
+- ^*.cover$
+- ^.hypothesis/$
+- ^.pytest_cache/$
+
+# Translations
+- ^*.mo$
+- ^*.pot$
+
+# Django stuff:
+- ^*.log$
+- ^local_settings.py$
+- ^db.sqlite3$
+
+# Flask stuff:
+- ^instance/$
+- ^.webassets-cache$
+
+# Scrapy stuff:
+- ^.scrapy$
+
+# Sphinx documentation
+- ^docs/_build/$
+
+# PyBuilder
+- ^target/$
+
+# Jupyter Notebook
+- ^.ipynb_checkpoints$
+
+# pyenv
+- ^.python-version$
+
+# celery beat schedule file
+- ^celerybeat-schedule$
+
+# SageMath parsed files
+- ^*.sage.py$
+
+# Environments
+- ^.env$
+- ^.venv$
+- ^env/$
+- ^venv/$
+- ^ENV/$
+- ^env.bak/$
+- ^venv.bak/$
+
+# Spyder project settings
+- ^.spyderproject$
+- ^.spyproject$
+
+# Rope project settings
+- ^.ropeproject$
+
+# mkdocs documentation
+- ^/site$
+
+# mypy
+- ^.mypy_cache/$
+
+- ^config/secrets.json$
+
+- ^uploads/$
+- ^uploads.backup/$
+
+
+- ^app/__init__.pyc$
+- ^app/deals/migrations/*$
+- ^app/job/migrations/*$
+- ^app/company/migrations/*$
+- ^app/contact/migrations/*$
+- ^app/owner/migrations/*$
+- ^app/properties/migrations/*$
+- ^*.pyc$
+

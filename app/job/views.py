@@ -5,6 +5,7 @@ from rest_framework import status
 from app.job.serializers import JobSerializer
 from app.job.models import Job
 from app.lib.response import ApiResponse
+from app.lib.validation import Validation
 from scripts.AgileCRM import agileCRM 
 from app.company.models import Company
 from app.company.serializers import CompanySerializer
@@ -15,11 +16,13 @@ class JobApi(APIView):
 	
 	def post(self,request):
 		try:
-			
 			company_name = request.data.get('owner_name')
 			is_exists = Company.objects.filter(company_name=company_name).exists()
 			if is_exists:
-				job_data = JobSerializer(data=request.data)
+				jobdata = self.validate(request)
+				if jobdata is not True:
+					return jobdata
+				job_data = JobSerializer(data=request.data,partial=True)
 				if not(job_data.is_valid()):
 					return ApiResponse().error(job_data.errors,400)
 				job_data.save()
@@ -72,7 +75,7 @@ class JobApi(APIView):
 				# print(update_data)
 				if update_data.is_valid():
 					update_data.save()
-					return ApiResponse().success('Job details updated Successfully', 200)
+					return ApiResponse().success(update_data.data, 200)
 				else:
 					return ApiResponse().error(update_data.errors,400)
 			else:
@@ -87,6 +90,37 @@ class JobApi(APIView):
 		except Exception as err:
 			print(err)
 			return ApiResponse().error('Please send valid id', 500)
+
+
+	def validate(self, request):
+		architect = Validation().null(request.data.get('architect'))
+		engineer = Validation().null(request.data.get('engineer_name'))
+		contractor = Validation().null(request.data.get('contractor_customer'))
+		
+		if(contractor is False) and (architect is False) and (engineer is False):
+			data = {"contractor":"Contractor field is required",
+					"architect":"Architect field is required",
+					"engineer":"Engineer field is required"}
+			return ApiResponse().error(data, 400)
+		if(contractor is False) and (engineer is False):
+			data = {"contractor":"Contractor field is required",
+					"engineer":"Engineer field is required"}
+			return ApiResponse().error(data, 400)
+		if(contractor is False) and (architect is False):
+			data = {"contractor":"Contractor field is required",
+					"architect":"Architect field is required"}
+			return ApiResponse().error(data, 400)
+		if(engineer is False) and (architect is False):
+			data = {"engineer":"Engineer field is required",
+					"architect":"Architect field is required"}
+			return ApiResponse().error(data, 400)
+		if engineer is False: 
+			return ApiResponse().error("Engineer field is required", 400)
+		if contractor is False:
+			return ApiResponse().error("Contractor field is required", 400)
+		if architect is False:
+			return ApiResponse().error("Architect field is required", 400)
+		return True	
 
 
 class CrmJobApi(APIView):
