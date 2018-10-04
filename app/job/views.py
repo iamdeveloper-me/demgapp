@@ -22,7 +22,7 @@ class JobApi(APIView):
 				jobdata = self.validate(request)
 				if jobdata is not True:
 					return jobdata
-				job_data = JobSerializer(data=request.data,partial=True)
+				job_data = JobSerializer(data=request.data)
 				if not(job_data.is_valid()):
 					return ApiResponse().error(job_data.errors,400)
 				job_data.save()

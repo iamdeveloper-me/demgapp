@@ -16,14 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf import settings
-from django.conf.urls import include, url
+from django.conf.urls import include
 from rest_framework_swagger.views import get_swagger_view
 schema_view = get_swagger_view(title='OCR API')
 
 
 urlpatterns = [
     
-    url(r'^$', schema_view),
+    path(r'', schema_view),
     path('admin/', admin.site.urls),
     # path('api/', include('api.urls'))
     path('api/', include('app.owner.urls')),
@@ -38,5 +38,5 @@ urlpatterns = [
 if settings.DEBUG:
     import debug_toolbar
     urlpatterns = [
-        url(r'^__debug__/', include(debug_toolbar.urls)),
+        path('__debug__/', include(debug_toolbar.urls)),
     ] + urlpatterns
